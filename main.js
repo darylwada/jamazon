@@ -156,6 +156,10 @@ function renderDetails(item) {
   ])
 }
 
+function getItem(items, itemId) {
+  return items.filter(item => item.itemId === itemId)[0]
+}
+
 function renderApp(app) {
   var $catalogView = document.querySelector("[data-view='catalog']")
   $catalogView.appendChild(createCatalog(app.catalog))
