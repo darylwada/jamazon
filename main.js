@@ -135,3 +135,7 @@ function createCatalog(catalog) {
     ])
   ])
 }
+
+function renderApp(app) {
+  document.body.appendChild(createCatalog(app.catalog))
+}
