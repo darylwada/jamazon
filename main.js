@@ -121,8 +121,7 @@ function createCard(item) {
     createElement('div', { class: 'card-body' }, [
       createElement('h5', { class: 'card-title' }, [item.brand]),
       createElement('p', { class: 'card-text' }, [item.name]),
-      createElement('p', { class: 'card-text' }, [currencyFormat(item.price)]),
-      createElement('a', { href: '#', class: 'btn btn-primary' }, ['Add to Cart'])
+      createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
     ])
   ])
 }
