@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 var app = {
   view: 'catalog',
   catalog: {
@@ -140,6 +142,17 @@ function createCatalog(catalog) {
       createElement('div', { class: 'col-3' }, [createCard(catalog.items[6])]),
       createElement('div', { class: 'col-3' }, [createCard(catalog.items[7])])
     ])
+  ])
+}
+
+function renderDetails(item) {
+  return createElement('div', { class: 'card-body' }, [
+    createElement('h5', { class: 'card-title' }, [item.brand]),
+    createElement('p', { class: 'card-text' }, [item.name]),
+    createElement('p', { class: 'card-text' }, [item.description]),
+    createElement('p', { class: 'card-text' }, [item.details]),
+    createElement('p', { class: 'card-text' }, [item.origin]),
+    createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
   ])
 }
 
