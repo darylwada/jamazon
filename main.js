@@ -108,13 +108,30 @@ function createElement(tagName, attributes, children) {
 }
 
 function createCard(item) {
-  return createElement('div', { style: "width: 18rem;" }, [
+  return createElement('div', { class: "card", style: "width: 18rem;" }, [
     createElement('img', { class: "card-img-top", src: item.imageUrl, alt: "Card image cap" }, []),
     createElement('div', { class: "card-body" }, [
       createElement('h5', { class: "brand" }, [item.brand]),
       createElement('p', { class: "name" }, [item.name]),
       createElement('p', { class: "price" }, [item.price]),
       createElement('a', { href: "#", class: "btn", class: "btn-primary"}, ['Go'])
+    ])
+  ])
+}
+
+function createCatalog(catalog) {
+  return createElement('div', { class: "container" }, [
+    createElement('div', { class: "row" }, [
+      createElement('div', { class: "col" }, [createCard(app.catalog.items[0])]),
+      createElement('div', { class: "col" }, [createCard(app.catalog.items[1])]),
+      createElement('div', { class: "col" }, [createCard(app.catalog.items[2])]),
+      createElement('div', { class: "col" }, [createCard(app.catalog.items[3])]),
+    ]),
+    createElement('div', { class: "row" }, [
+      createElement('div', { class: "col" }, [createCard(app.catalog.items[4])]),
+      createElement('div', { class: "col" }, [createCard(app.catalog.items[5])]),
+      createElement('div', { class: "col" }, [createCard(app.catalog.items[6])]),
+      createElement('div', { class: "col" }, [createCard(app.catalog.items[7])]),
     ])
   ])
 }
