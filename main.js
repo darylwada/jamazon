@@ -122,16 +122,16 @@ function createCard(item) {
 function createCatalog(catalog) {
   return createElement('div', { class: "container" }, [
     createElement('div', { class: "row" }, [
-      createElement('div', { class: "col" }, [createCard(app.catalog.items[0])]),
-      createElement('div', { class: "col" }, [createCard(app.catalog.items[1])]),
-      createElement('div', { class: "col" }, [createCard(app.catalog.items[2])]),
-      createElement('div', { class: "col" }, [createCard(app.catalog.items[3])]),
+      createElement('div', { class: "col" }, [createCard(catalog.items[0])]),
+      createElement('div', { class: "col" }, [createCard(catalog.items[1])]),
+      createElement('div', { class: "col" }, [createCard(catalog.items[2])]),
+      createElement('div', { class: "col" }, [createCard(catalog.items[3])]),
     ]),
     createElement('div', { class: "row" }, [
-      createElement('div', { class: "col" }, [createCard(app.catalog.items[4])]),
-      createElement('div', { class: "col" }, [createCard(app.catalog.items[5])]),
-      createElement('div', { class: "col" }, [createCard(app.catalog.items[6])]),
-      createElement('div', { class: "col" }, [createCard(app.catalog.items[7])]),
+      createElement('div', { class: "col" }, [createCard(catalog.items[4])]),
+      createElement('div', { class: "col" }, [createCard(catalog.items[5])]),
+      createElement('div', { class: "col" }, [createCard(catalog.items[6])]),
+      createElement('div', { class: "col" }, [createCard(catalog.items[7])]),
     ])
   ])
 }
