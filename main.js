@@ -122,7 +122,7 @@ function renderCard(item) {
     createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
     createElement('div', { class: 'card-body' }, [
       createElement('h5', { class: 'card-title' }, [item.brand]),
-      createElement('p', { class: 'card-text' }, [item.name]),
+      createElement('p', { class: 'card-text item-name' }, [item.name]),
       createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
     ])
   ])
@@ -153,10 +153,10 @@ function renderDetails(item) {
       ]),
       createElement('div', { class: 'col-8' }, [
         createElement('h5', { class: 'card-title' }, [item.brand]),
-        createElement('p', { class: 'card-text' }, [item.name]),
-        createElement('p', { class: 'card-text' }, [item.description]),
-        createElement('p', { class: 'card-text' }, [item.details]),
-        createElement('p', { class: 'card-text' }, [item.origin]),
+        createElement('p', { class: 'card-text item-name' }, [item.name]),
+        createElement('p', { class: 'card-text item-description' }, [item.description]),
+        createElement('p', { class: 'card-text item-details' }, [item.details]),
+        createElement('p', { class: 'card-text item-origin' }, [item.origin]),
         createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
       ])
     ])

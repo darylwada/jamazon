@@ -12,8 +12,16 @@ h1 {
   font-family: 'Ember', serif;
 }
 
+.hidden {
+  display: none;
+}
+
 .card {
   height: 100%;
+}
+
+.card-title {
+  margin-bottom: 5px;
 }
 
 .card-body {
@@ -22,6 +30,11 @@ h1 {
   justify-content: flex-end;
 }
 
-.hidden {
-  display: none;
+.item-name {
+  font-weight: bold;
+}
+
+.item-details,
+.item-origin {
+  font-size: 0.9em;
 }
