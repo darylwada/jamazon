@@ -118,7 +118,7 @@ function currencyFormat(price) {
 }
 
 function createCard(item) {
-  return createElement('div', { class: 'card', style: 'width: 18rem;' }, [
+  return createElement('div', { class: 'card', style: 'width: 18rem;', 'data-item-id': item.itemId }, [
     createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
     createElement('div', { class: 'card-body' }, [
       createElement('h5', { class: 'card-title' }, [item.brand]),
