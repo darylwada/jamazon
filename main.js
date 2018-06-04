@@ -88,3 +88,33 @@ var app = {
     item: null
   }
 }
+
+function createElement(tagName, attributes, children) {
+  var $HTMLElement = document.createElement(tagName)
+  for (var key in attributes) {
+    $HTMLElement.setAttribute(key, attributes[key])
+  }
+
+  children.forEach(function (child) {
+    if (child instanceof Node) {
+      $HTMLElement.appendChild(child)
+    }
+    else {
+      $HTMLElement.textContent = child
+    }
+  })
+
+  return $HTMLElement
+}
+
+function createCard(item) {
+  return createElement('div', { style: "width: 18rem;" }, [
+    createElement('img', { class: "card-img-top", src: item.imageUrl, alt: "Card image cap" }, []),
+    createElement('div', { class: "card-body" }, [
+      createElement('h5', { class: "brand" }, [item.brand]),
+      createElement('p', { class: "name" }, [item.name]),
+      createElement('p', { class: "price" }, [item.price]),
+      createElement('a', { href: "#", class: "btn", class: "btn-primary"}, ['Go'])
+    ])
+  ])
+}
