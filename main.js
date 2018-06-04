@@ -172,8 +172,9 @@ function showContainer(view) {
 }
 
 function renderApp(app) {
-  var $catalogView = document.querySelector("[data-view='catalog']")
-  $catalogView.appendChild(createCatalog(app.catalog))
+  showContainer(app.view)
+  var $view = document.querySelector('[data-view]:not(.hidden)')
+  $view.appendChild(createCatalog(app.catalog))
 }
 
 renderApp(app)
