@@ -166,3 +166,15 @@ function renderApp(app) {
 }
 
 renderApp(app)
+
+var $catalogView = document.querySelector("[data-view='catalog']")
+$catalogView.addEventListener('click', (event) => {
+  var $closestItem = event.target.closest('.card')
+  var clickedItemId = parseInt($closestItem.dataset.itemId)
+
+  if ($closestItem) {
+    app.view = 'details'
+    app.details.item = getItem(app.catalog.items, clickedItemId)
+  }
+
+})
