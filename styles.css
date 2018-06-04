@@ -1,0 +1,23 @@
+h1 {
+  height: 100px;
+  background-color: rgb(36, 48, 61);
+  line-height: 100px;
+  text-align: center;
+  color: white;
+  font-family: 'Ember', serif;
+  margin-bottom: 100px;
+}
+
+#app {
+  font-family: 'Ember', serif;
+}
+
+.card {
+  height: 100%;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
