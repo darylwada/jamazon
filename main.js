@@ -146,13 +146,20 @@ function renderCatalog(catalog) {
 }
 
 function renderDetails(item) {
-  return createElement('div', { class: 'card-body' }, [
-    createElement('h5', { class: 'card-title' }, [item.brand]),
-    createElement('p', { class: 'card-text' }, [item.name]),
-    createElement('p', { class: 'card-text' }, [item.description]),
-    createElement('p', { class: 'card-text' }, [item.details]),
-    createElement('p', { class: 'card-text' }, [item.origin]),
-    createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+  return createElement('div', { class: 'container' }, [
+    createElement('div', { class: 'row' }, [
+      createElement('div', { class: 'col-4' }, [
+        createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, [])
+      ]),
+      createElement('div', { class: 'col-8' }, [
+        createElement('h5', { class: 'card-title' }, [item.brand]),
+        createElement('p', { class: 'card-text' }, [item.name]),
+        createElement('p', { class: 'card-text' }, [item.description]),
+        createElement('p', { class: 'card-text' }, [item.details]),
+        createElement('p', { class: 'card-text' }, [item.origin]),
+        createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+      ])
+    ])
   ])
 }
 
