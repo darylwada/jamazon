@@ -117,7 +117,7 @@ function currencyFormat(price) {
   return '$' + priceStr
 }
 
-function createCard(item) {
+function renderCard(item) {
   return createElement('div', { class: 'card', style: 'width: 18rem;', 'data-item-id': item.itemId }, [
     createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
     createElement('div', { class: 'card-body' }, [
@@ -128,19 +128,19 @@ function createCard(item) {
   ])
 }
 
-function createCatalog(catalog) {
+function renderCatalog(catalog) {
   return createElement('div', { class: 'container' }, [
     createElement('div', { class: 'row' }, [
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[0])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[1])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[2])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[3])])
+      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[0])]),
+      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[1])]),
+      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[2])]),
+      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[3])])
     ]),
     createElement('div', { class: 'row' }, [
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[4])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[5])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[6])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[7])])
+      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[4])]),
+      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[5])]),
+      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[6])]),
+      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[7])])
     ])
   ])
 }
@@ -168,7 +168,7 @@ function showContainer(view) {
 function renderApp(app) {
   showContainer(app.view)
   if (app.view === 'catalog') {
-    $catalogView.appendChild(createCatalog(app.catalog))
+    $catalogView.appendChild(renderCatalog(app.catalog))
   }
   else if (app.view === 'details') {
     $detailsView.appendChild(renderDetails(app.details.item))
