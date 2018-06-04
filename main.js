@@ -161,25 +161,25 @@ function getItem(items, itemId) {
 }
 
 function showContainer(view) {
-  if (view === 'catalog') {
-    var $detailView = document.querySelector("[data-view='details']")
-    $detailView.classList.toggle('hidden')
-  }
-  else if (view === 'details') {
-    var $catalogView = document.querySelector("[data-view='catalog']")
-    $catalogView.classList.toggle('hidden')
-  }
+  $detailsView.classList.toggle('hidden')
+  $catalogView.classList.toggle('hidden')
 }
 
 function renderApp(app) {
   showContainer(app.view)
-  var $view = document.querySelector('[data-view]:not(.hidden)')
-  $view.appendChild(createCatalog(app.catalog))
+  if (app.view === 'catalog') {
+    $catalogView.appendChild(createCatalog(app.catalog))
+  }
+  else if (app.view === 'details') {
+    $detailsView.appendChild(renderDetails(app.details.item))
+  }
 }
+
+var $catalogView = document.querySelector("[data-view='catalog']")
+var $detailsView = document.querySelector("[data-view='details']")
 
 renderApp(app)
 
-var $catalogView = document.querySelector("[data-view='catalog']")
 $catalogView.addEventListener('click', (event) => {
   var $closestItem = event.target.closest('.card')
   var clickedItemId = parseInt($closestItem.dataset.itemId)
@@ -189,4 +189,5 @@ $catalogView.addEventListener('click', (event) => {
     app.details.item = getItem(app.catalog.items, clickedItemId)
   }
 
+  renderApp(app)
 })
