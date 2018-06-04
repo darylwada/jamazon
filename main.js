@@ -160,6 +160,17 @@ function getItem(items, itemId) {
   return items.filter(item => item.itemId === itemId)[0]
 }
 
+function showContainer(view) {
+  if (view === 'catalog') {
+    var $detailView = document.querySelector("[data-view='details']")
+    $detailView.classList.toggle('hidden')
+  }
+  else if (view === 'details') {
+    var $catalogView = document.querySelector("[data-view='catalog']")
+    $catalogView.classList.toggle('hidden')
+  }
+}
+
 function renderApp(app) {
   var $catalogView = document.querySelector("[data-view='catalog']")
   $catalogView.appendChild(createCatalog(app.catalog))
