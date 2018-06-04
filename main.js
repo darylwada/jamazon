@@ -107,13 +107,21 @@ function createElement(tagName, attributes, children) {
   return $HTMLElement
 }
 
+function currencyFormat(price) {
+  var priceStr = price.toString()
+  if (priceStr[priceStr.length - 3] !== '.') {
+    priceStr += '.00'
+  }
+  return '$' + priceStr
+}
+
 function createCard(item) {
   return createElement('div', { class: 'card', style: 'width: 18rem;' }, [
     createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
     createElement('div', { class: 'card-body' }, [
       createElement('h5', { class: 'card-title' }, [item.brand]),
       createElement('p', { class: 'card-text' }, [item.name]),
-      createElement('p', { class: 'card-text' }, [item.price]),
+      createElement('p', { class: 'card-text' }, [currencyFormat(item.price)]),
       createElement('a', { href: '#', class: 'btn btn-primary' }, ['Add to Cart'])
     ])
   ])
