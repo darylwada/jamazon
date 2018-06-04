@@ -137,5 +137,6 @@ function createCatalog(catalog) {
 }
 
 function renderApp(app) {
-  document.body.appendChild(createCatalog(app.catalog))
+  var $catalogView = document.querySelector("[data-view='catalog']")
+  $catalogView.appendChild(createCatalog(app.catalog))
 }
