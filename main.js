@@ -169,7 +169,7 @@ function renderCart(cart) {
 }
 
 function getItem(items, itemId) {
-  return items.filter((item) => item.itemId === itemId)[0]
+  return items.find((item) => item.itemId === itemId)
 }
 
 function showContainer(view) {
