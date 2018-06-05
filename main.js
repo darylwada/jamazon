@@ -176,6 +176,36 @@ function renderCartItem(item) {
   ])
 }
 
+function renderCartTotal(cart) {
+  var total = cart.items.reduce((acc, item) => {
+    return acc + item.price
+  }, 0)
+  return createElement('div', { class: 'row' }, [
+    createElement('span', { class: 'cart-total' }, ['Total: ' + total])
+  ])
+}
+
+function renderCartItemCount(cart) {
+  return createElement('div', { class: 'row' }, [
+    createElement('span', { class: 'cart-item-count' }, ['Items: ' + cart.items.length])
+  ])
+}
+
+function renderCartSummary(cart) {
+  var $summary = createElement('div', { class: 'container' }, [
+    createElement('h2', { class: 'cart-header' }, ['Cart Summary'])
+  ])
+
+  app.cart.items.forEach((item) => {
+    $summary.appendChild(renderCartItem(item))
+  })
+
+  $summary.appendChild(renderCartItemCount(cart))
+  $summary.appendChild(renderCartTotal(cart))
+
+  return $summary
+}
+
 function renderCart(cart) {
   return createElement('div', { class: 'nav-item' }, [
     'Cart: ',
