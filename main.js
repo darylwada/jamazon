@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 var app = {
   view: 'catalog',
   catalog: {
@@ -135,7 +133,7 @@ function renderCatalog(catalog) {
   var $container = createElement('div', { class: 'container' }, [])
   var $row = createElement('div', { class: 'row' }, [])
 
-  catalog.items.forEach((item, index) => {
+  catalog.items.forEach((item) => {
     var $item = createElement('div', { class: 'col-3' }, [renderCard(item)])
     $row.appendChild($item)
   })
@@ -171,7 +169,7 @@ function renderCart(cart) {
 }
 
 function getItem(items, itemId) {
-  return items.filter(item => item.itemId === itemId)[0]
+  return items.filter((item) => item.itemId === itemId)[0]
 }
 
 function showContainer(view) {
