@@ -42,3 +42,12 @@ h1 {
 .item-origin {
   font-size: 0.9em;
 }
+
+.cart-container {
+  position: absolute;
+  top: 75px;
+  left: 0;
+  right: 0;
+  color: rgb(253, 152, 39);
+  text-align: right;
+}
