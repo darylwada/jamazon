@@ -171,8 +171,10 @@ function getItem(items, itemId) {
 }
 
 function showContainer(view) {
-  $detailsView.classList.toggle('hidden')
-  $catalogView.classList.toggle('hidden')
+  var $visible = document.querySelector('[data-view=' + view + ']')
+  var $hidden = document.querySelector('[data-view]:not([data-view=' + view + '])')
+  $visible.classList.remove('hidden')
+  $hidden.classList.add('hidden')
 }
 
 function renderApp(app) {
