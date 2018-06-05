@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 var app = {
   view: 'catalog',
   catalog: {
@@ -157,6 +159,13 @@ function renderDetails(item) {
         createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
       ])
     ])
+  ])
+}
+
+function renderCart(cart) {
+  return createElement('div', { class: 'cart-container' }, [
+    'Cart: ',
+    createElement('span', { class: 'cart-number' }, [cart.items.length])
   ])
 }
 
