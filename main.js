@@ -219,9 +219,13 @@ function getItem(items, itemId) {
 
 function showContainer(view) {
   var $visible = document.querySelector('[data-view=' + view + ']')
-  var $hidden = document.querySelector('[data-view]:not([data-view=' + view + '])')
+  var $hidden = document.querySelectorAll('[data-view]:not([data-view=' + view + '])')
   $visible.classList.remove('hidden')
-  $hidden.classList.add('hidden')
+
+  $hidden.forEach(($node) => {
+    $node.classList.add('hidden')
+  })
+
 }
 
 function renderApp(app) {
@@ -235,6 +239,10 @@ function renderApp(app) {
     $detailsView.innerHTML = ''
     $detailsView.appendChild(renderDetails(app.details.item))
   }
+  else if (app.view === 'cart') {
+    $cartSummaryView.innerHTML = ''
+    $cartSummaryView.appendChild(renderCartSummary(app.cart))
+  }
 
   $cart.innerHTML = ''
   $cart.appendChild(renderCart(app.cart))
@@ -243,6 +251,7 @@ function renderApp(app) {
 
 var $catalogView = document.querySelector("[data-view='catalog']")
 var $detailsView = document.querySelector("[data-view='details']")
+var $cartSummaryView = document.querySelector("[data-view='cart']")
 var $cart = document.querySelector('.cart-container')
 
 renderApp(app)
@@ -269,5 +278,12 @@ $detailsView.addEventListener('click', (event) => {
     app.view = 'catalog'
     renderApp(app)
   }
+
+})
+
+$cart.addEventListener('click', (event) => {
+
+  app.view = 'cart'
+  renderApp(app)
 
 })
