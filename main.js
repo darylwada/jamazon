@@ -86,6 +86,9 @@ var app = {
   },
   details: {
     item: null
+  },
+  cart: {
+    items: []
   }
 }
 
