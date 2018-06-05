@@ -155,7 +155,8 @@ function renderDetails(item) {
         createElement('p', { class: 'card-text item-details' }, [item.details]),
         createElement('p', { class: 'card-text item-origin' }, [item.origin]),
         createElement('p', { class: 'badge' }, [currencyFormat(item.price)]),
-        createElement('button', { class: 'btn btn-primary', id: 'add-to-cart' }, ['Add to Cart'])
+        createElement('button', { class: 'btn btn-primary', id: 'add-to-cart' }, ['Add to Cart']),
+        createElement('button', { class: 'btn btn-primary', id: 'continue-shopping' }, ['Continue Shopping'])
       ])
     ])
   ])
@@ -218,6 +219,10 @@ $detailsView.addEventListener('click', (event) => {
 
   if (event.target.id === 'add-to-cart') {
     app.cart.items.push(app.details.item)
+    renderApp(app)
+  }
+  else if (event.target.id === 'continue-shopping') {
+    app.view = 'catalog'
     renderApp(app)
   }
 
