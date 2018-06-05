@@ -221,6 +221,7 @@ $detailsView.addEventListener('click', (event) => {
 
   if (event.target === $cartBtn) {
     app.cart.items.push(app.details.item)
+    renderApp(app)
   }
 
 })
