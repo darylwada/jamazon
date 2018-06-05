@@ -20,6 +20,10 @@ h1 {
   height: 100%;
 }
 
+.card:hover {
+  cursor: pointer;
+}
+
 .card-title {
   margin-bottom: 5px;
 }
