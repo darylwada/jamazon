@@ -185,18 +185,16 @@ function renderApp(app) {
   showContainer(app.view)
 
   if (app.view === 'catalog') {
+    $catalogView.innerHTML = ''
     $catalogView.appendChild(renderCatalog(app.catalog))
   }
   else if (app.view === 'details') {
+    $detailsView.innerHTML = ''
     $detailsView.appendChild(renderDetails(app.details.item))
   }
 
-  if ($cart.childNodes.length === 0) {
-    $cart.appendChild(renderCart(app.cart))
-  }
-  else {
-    $cart.replaceChild(renderCart(app.cart), $cart.childNodes[0])
-  }
+  $cart.innerHTML = ''
+  $cart.appendChild(renderCart(app.cart))
 
 }
 
