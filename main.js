@@ -130,21 +130,14 @@ function renderCard(item) {
 
 function renderCatalog(catalog) {
   var $container = createElement('div', { class: 'container' }, [])
-  var $rows = {}
-  var rowIndex = 0
-  $rows[rowIndex] = createElement('div', { class: 'row' }, [])
+  var $row = createElement('div', { class: 'row' }, [])
 
   catalog.items.forEach((item, index) => {
-    if (index % 4 === 0 && index > 0) {
-      $container.appendChild($rows[rowIndex])
-      rowIndex++
-      $rows[rowIndex] = createElement('div', { class: 'row' }, [])
-    }
     var $item = createElement('div', { class: 'col-3' }, [renderCard(item)])
-    $rows[rowIndex].appendChild($item)
+    $row.appendChild($item)
   })
 
-  $container.appendChild($rows[rowIndex])
+  $container.appendChild($row)
   return $container
 }
 
