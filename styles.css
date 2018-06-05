@@ -53,14 +53,22 @@ h1 {
 }
 
 .btn-primary {
-  background: linear-gradient(rgb(253, 188, 111), rgb(253, 152, 39));
   border-color: rgb(36, 48, 61);
   color: black;
   display: inline-block;
   position: absolute;
+}
+
+#add-to-cart {
+  background: linear-gradient(rgb(253, 188, 111), rgb(253, 152, 39));
+  right: 180px;
+}
+
+#continue-shopping {
+  background: linear-gradient(rgb(239, 193, 87), rgb(253, 188, 111));
   right: 15px;
 }
 
 .badge {
-  font-size: 16px;
+  font-size: 100%;
 }
