@@ -194,7 +194,7 @@ renderApp(app)
 
 $catalogView.addEventListener('click', (event) => {
   var $closestItem = event.target.closest('.card')
-  var clickedItemId = parseInt($closestItem.dataset.itemId)
+  var clickedItemId = parseInt($closestItem.dataset.itemId, 10)
 
   if ($closestItem) {
     app.view = 'details'
