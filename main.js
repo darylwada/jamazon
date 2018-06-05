@@ -163,7 +163,7 @@ function renderDetails(item) {
 }
 
 function renderCart(cart) {
-  return createElement('div', { class: 'cart-container' }, [
+  return createElement('div', { class: 'nav-item' }, [
     'Cart: ',
     createElement('span', { class: 'cart-number' }, [cart.items.length])
   ])
@@ -188,10 +188,12 @@ function renderApp(app) {
   else if (app.view === 'details') {
     $detailsView.appendChild(renderDetails(app.details.item))
   }
+  $cart.appendChild(renderCart(app.cart))
 }
 
 var $catalogView = document.querySelector("[data-view='catalog']")
 var $detailsView = document.querySelector("[data-view='details']")
+var $cart = document.querySelector('.cart-container')
 
 renderApp(app)
 
