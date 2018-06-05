@@ -51,3 +51,16 @@ h1 {
   color: rgb(253, 152, 39);
   text-align: right;
 }
+
+.btn-primary {
+  background: linear-gradient(rgb(253, 188, 111), rgb(253, 152, 39));
+  border-color: rgb(36, 48, 61);
+  color: black;
+  display: inline-block;
+  position: absolute;
+  right: 15px;
+}
+
+.badge {
+  font-size: 16px;
+}

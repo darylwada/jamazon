@@ -156,7 +156,8 @@ function renderDetails(item) {
         createElement('p', { class: 'card-text item-description' }, [item.description]),
         createElement('p', { class: 'card-text item-details' }, [item.details]),
         createElement('p', { class: 'card-text item-origin' }, [item.origin]),
-        createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+        createElement('p', { class: 'badge' }, [currencyFormat(item.price)]),
+        createElement('button', { class: 'btn btn-primary' }, ['Add to Cart'])
       ])
     ])
   ])
