@@ -157,7 +157,7 @@ function renderDetails(item) {
         createElement('p', { class: 'card-text item-details' }, [item.details]),
         createElement('p', { class: 'card-text item-origin' }, [item.origin]),
         createElement('p', { class: 'badge' }, [currencyFormat(item.price)]),
-        createElement('button', { class: 'btn btn-primary' }, ['Add to Cart'])
+        createElement('button', { class: 'btn btn-primary', id: 'add-to-cart' }, ['Add to Cart'])
       ])
     ])
   ])
@@ -185,18 +185,16 @@ function renderApp(app) {
   showContainer(app.view)
 
   if (app.view === 'catalog') {
+    $catalogView.innerHTML = ''
     $catalogView.appendChild(renderCatalog(app.catalog))
   }
   else if (app.view === 'details') {
+    $detailsView.innerHTML = ''
     $detailsView.appendChild(renderDetails(app.details.item))
   }
 
-  if ($cart.childNodes.length === 0) {
-    $cart.appendChild(renderCart(app.cart))
-  }
-  else {
-    $cart.replaceChild(renderCart(app.cart), $cart.childNodes[0])
-  }
+  $cart.innerHTML = ''
+  $cart.appendChild(renderCart(app.cart))
 
 }
 
@@ -214,6 +212,15 @@ $catalogView.addEventListener('click', (event) => {
     app.view = 'details'
     app.details.item = getItem(app.catalog.items, clickedItemId)
     renderApp(app)
+  }
+
+})
+
+$detailsView.addEventListener('click', (event) => {
+  var $cartBtn = document.querySelector('#add-to-cart')
+
+  if (event.target === $cartBtn) {
+    app.cart.items.push(app.details.item)
   }
 
 })
