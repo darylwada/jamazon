@@ -215,9 +215,8 @@ $catalogView.addEventListener('click', (event) => {
 })
 
 $detailsView.addEventListener('click', (event) => {
-  var $cartBtn = document.querySelector('#add-to-cart')
 
-  if (event.target === $cartBtn) {
+  if (event.target.id === 'add-to-cart') {
     app.cart.items.push(app.details.item)
     renderApp(app)
   }
