@@ -86,6 +86,9 @@ var app = {
   },
   details: {
     item: null
+  },
+  cart: {
+    items: []
   }
 }
 
@@ -130,7 +133,7 @@ function renderCatalog(catalog) {
   var $container = createElement('div', { class: 'container' }, [])
   var $row = createElement('div', { class: 'row' }, [])
 
-  catalog.items.forEach((item, index) => {
+  catalog.items.forEach((item) => {
     var $item = createElement('div', { class: 'col-3' }, [renderCard(item)])
     $row.appendChild($item)
   })
@@ -151,14 +154,22 @@ function renderDetails(item) {
         createElement('p', { class: 'card-text item-description' }, [item.description]),
         createElement('p', { class: 'card-text item-details' }, [item.details]),
         createElement('p', { class: 'card-text item-origin' }, [item.origin]),
-        createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+        createElement('p', { class: 'badge' }, [currencyFormat(item.price)]),
+        createElement('button', { class: 'btn btn-primary', id: 'add-to-cart' }, ['Add to Cart'])
       ])
     ])
   ])
 }
 
+function renderCart(cart) {
+  return createElement('div', { class: 'nav-item' }, [
+    'Cart: ',
+    createElement('span', { class: 'cart-number' }, [cart.items.length])
+  ])
+}
+
 function getItem(items, itemId) {
-  return items.filter(item => item.itemId === itemId)[0]
+  return items.find((item) => item.itemId === itemId)
 }
 
 function showContainer(view) {
@@ -170,16 +181,24 @@ function showContainer(view) {
 
 function renderApp(app) {
   showContainer(app.view)
+
   if (app.view === 'catalog') {
+    $catalogView.innerHTML = ''
     $catalogView.appendChild(renderCatalog(app.catalog))
   }
   else if (app.view === 'details') {
+    $detailsView.innerHTML = ''
     $detailsView.appendChild(renderDetails(app.details.item))
   }
+
+  $cart.innerHTML = ''
+  $cart.appendChild(renderCart(app.cart))
+
 }
 
 var $catalogView = document.querySelector("[data-view='catalog']")
 var $detailsView = document.querySelector("[data-view='details']")
+var $cart = document.querySelector('.cart-container')
 
 renderApp(app)
 
@@ -190,6 +209,15 @@ $catalogView.addEventListener('click', (event) => {
   if ($closestItem) {
     app.view = 'details'
     app.details.item = getItem(app.catalog.items, clickedItemId)
+    renderApp(app)
+  }
+
+})
+
+$detailsView.addEventListener('click', (event) => {
+
+  if (event.target.id === 'add-to-cart') {
+    app.cart.items.push(app.details.item)
     renderApp(app)
   }
 
