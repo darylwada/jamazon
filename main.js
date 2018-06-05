@@ -115,37 +115,82 @@ function currencyFormat(price) {
   return '$' + priceStr
 }
 
-function createCard(item) {
-  return createElement('div', { class: 'card', style: 'width: 18rem;' }, [
+function renderCard(item) {
+  return createElement('div', { class: 'card', style: 'width: 18rem;', 'data-item-id': item.itemId }, [
     createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
     createElement('div', { class: 'card-body' }, [
       createElement('h5', { class: 'card-title' }, [item.brand]),
-      createElement('p', { class: 'card-text' }, [item.name]),
+      createElement('p', { class: 'card-text item-name' }, [item.name]),
       createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
     ])
   ])
 }
 
-function createCatalog(catalog) {
+function renderCatalog(catalog) {
+  var $container = createElement('div', { class: 'container' }, [])
+  var $row = createElement('div', { class: 'row' }, [])
+
+  catalog.items.forEach((item, index) => {
+    var $item = createElement('div', { class: 'col-3' }, [renderCard(item)])
+    $row.appendChild($item)
+  })
+
+  $container.appendChild($row)
+  return $container
+}
+
+function renderDetails(item) {
   return createElement('div', { class: 'container' }, [
     createElement('div', { class: 'row' }, [
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[0])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[1])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[2])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[3])])
-    ]),
-    createElement('div', { class: 'row' }, [
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[4])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[5])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[6])]),
-      createElement('div', { class: 'col-3' }, [createCard(catalog.items[7])])
+      createElement('div', { class: 'col-4' }, [
+        createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, [])
+      ]),
+      createElement('div', { class: 'col-8' }, [
+        createElement('h5', { class: 'card-title' }, [item.brand]),
+        createElement('p', { class: 'card-text item-name' }, [item.name]),
+        createElement('p', { class: 'card-text item-description' }, [item.description]),
+        createElement('p', { class: 'card-text item-details' }, [item.details]),
+        createElement('p', { class: 'card-text item-origin' }, [item.origin]),
+        createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+      ])
     ])
   ])
 }
 
-function renderApp(app) {
-  var $catalogView = document.querySelector("[data-view='catalog']")
-  $catalogView.appendChild(createCatalog(app.catalog))
+function getItem(items, itemId) {
+  return items.filter(item => item.itemId === itemId)[0]
 }
 
+function showContainer(view) {
+  var $visible = document.querySelector('[data-view=' + view + ']')
+  var $hidden = document.querySelector('[data-view]:not([data-view=' + view + '])')
+  $visible.classList.remove('hidden')
+  $hidden.classList.add('hidden')
+}
+
+function renderApp(app) {
+  showContainer(app.view)
+  if (app.view === 'catalog') {
+    $catalogView.appendChild(renderCatalog(app.catalog))
+  }
+  else if (app.view === 'details') {
+    $detailsView.appendChild(renderDetails(app.details.item))
+  }
+}
+
+var $catalogView = document.querySelector("[data-view='catalog']")
+var $detailsView = document.querySelector("[data-view='details']")
+
 renderApp(app)
+
+$catalogView.addEventListener('click', (event) => {
+  var $closestItem = event.target.closest('.card')
+  var clickedItemId = parseInt($closestItem.dataset.itemId, 10)
+
+  if ($closestItem) {
+    app.view = 'details'
+    app.details.item = getItem(app.catalog.items, clickedItemId)
+    renderApp(app)
+  }
+
+})
