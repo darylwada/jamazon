@@ -199,7 +199,7 @@ $catalogView.addEventListener('click', (event) => {
   if ($closestItem) {
     app.view = 'details'
     app.details.item = getItem(app.catalog.items, clickedItemId)
+    renderApp(app)
   }
 
-  renderApp(app)
 })
