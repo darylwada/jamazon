@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 var app = {
   view: 'catalog',
   catalog: {
@@ -158,6 +159,19 @@ function renderDetails(item) {
         createElement('button', { class: 'btn btn-primary', id: 'add-to-cart' }, ['Add to Cart']),
         createElement('button', { class: 'btn btn-primary', id: 'continue-shopping' }, ['Continue Shopping'])
       ])
+    ])
+  ])
+}
+
+function renderCartItem(item) {
+  return createElement('div', { class: 'row' }, [
+    createElement('div', { class: 'col-4' }, [
+      createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, [])
+    ]),
+    createElement('div', { class: 'col-8' }, [
+      createElement('h5', { class: 'card-title' }, [item.brand]),
+      createElement('p', { class: 'card-text item-name' }, [item.name]),
+      createElement('p', { class: 'badge' }, [currencyFormat(item.price)])
     ])
   ])
 }
