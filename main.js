@@ -221,5 +221,9 @@ $detailsView.addEventListener('click', (event) => {
     app.cart.items.push(app.details.item)
     renderApp(app)
   }
+  else if (event.target.id === 'continue-shopping') {
+    app.view = 'catalog'
+    renderApp(app)
+  }
 
 })
