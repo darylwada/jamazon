@@ -129,20 +129,23 @@ function renderCard(item) {
 }
 
 function renderCatalog(catalog) {
-  return createElement('div', { class: 'container' }, [
-    createElement('div', { class: 'row' }, [
-      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[0])]),
-      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[1])]),
-      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[2])]),
-      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[3])])
-    ]),
-    createElement('div', { class: 'row' }, [
-      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[4])]),
-      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[5])]),
-      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[6])]),
-      createElement('div', { class: 'col-3' }, [renderCard(catalog.items[7])])
-    ])
-  ])
+  var $container = createElement('div', { class: 'container' }, [])
+  var $rows = {}
+  var rowIndex = 0
+  $rows[rowIndex] = createElement('div', { class: 'row' }, [])
+
+  catalog.items.forEach((item, index) => {
+    if (index % 4 === 0 && index > 0) {
+      $container.appendChild($rows[rowIndex])
+      rowIndex++
+      $rows[rowIndex] = createElement('div', { class: 'row' }, [])
+    }
+    var $item = createElement('div', { class: 'col-3' }, [renderCard(item)])
+    $rows[rowIndex].appendChild($item)
+  })
+
+  $container.appendChild($rows[rowIndex])
+  return $container
 }
 
 function renderDetails(item) {
