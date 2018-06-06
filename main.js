@@ -193,6 +193,27 @@ function renderCart(cart) {
   ])
 }
 
+function renderCheckout(cart) {
+  return createElement('div', { class: 'container' }, [
+    createElement('div', { class: 'row' }, [
+      createElement('form', { class: 'col-6 offset-3' }, [
+        createElement('div', { class: 'form-group' }, [
+          createElement('label', { for: 'form-name-input' }, ['Name']),
+          createElement('input', { type: 'name', class: 'form-control', id: 'form-name-input', placeholder: 'John Doe' }, [])
+        ]),
+        createElement('div', { class: 'form-group' }, [
+          createElement('label', { for: 'form-address-input' }, ['Address']),
+          createElement('input', { type: 'address', class: 'form-control', id: 'form-address-input', placeholder: 'Street Number' }, [])
+        ]),
+        createElement('div', { class: 'form-group' }, [
+          createElement('label', { for: 'form-card-input' }, ['Credit Card']),
+          createElement('input', { type: 'card', class: 'form-control', id: 'form-card-input', placeholder: '1234' }, [])
+        ])
+      ])
+    ])
+  ])
+}
+
 function getItem(items, itemId) {
   return items.find((item) => item.itemId === itemId)
 }
@@ -220,6 +241,10 @@ function renderApp(app) {
     $cartSummaryView.innerHTML = ''
     $cartSummaryView.appendChild(renderCartSummary(app.cart))
   }
+  else if (app.view === 'checkout') {
+    $checkoutView.innerHTML = ''
+    $checkoutView.appendChild(renderCheckout(app.cart))
+  }
   $cart.innerHTML = ''
   $cart.appendChild(renderCart(app.cart))
 }
@@ -227,6 +252,7 @@ function renderApp(app) {
 var $catalogView = document.querySelector("[data-view='catalog']")
 var $detailsView = document.querySelector("[data-view='details']")
 var $cartSummaryView = document.querySelector("[data-view='cart']")
+var $checkoutView = document.querySelector("[data-view='checkout']")
 var $cart = document.querySelector('.cart-container')
 
 renderApp(app)
