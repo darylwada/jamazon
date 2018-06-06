@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 var app = {
   view: 'catalog',
   catalog: {
@@ -98,7 +97,6 @@ function createElement(tagName, attributes, children) {
   for (var key in attributes) {
     $HTMLElement.setAttribute(key, attributes[key])
   }
-
   children.forEach(function (child) {
     if (child instanceof Node) {
       $HTMLElement.appendChild(child)
@@ -107,16 +105,11 @@ function createElement(tagName, attributes, children) {
       $HTMLElement.textContent = child
     }
   })
-
   return $HTMLElement
 }
 
 function currencyFormat(price) {
-  var priceStr = price.toString()
-  if (priceStr[priceStr.length - 3] !== '.') {
-    priceStr += '.00'
-  }
-  return '$' + priceStr
+  return '$' + price.toFixed(2)
 }
 
 function renderCard(item) {
@@ -133,12 +126,10 @@ function renderCard(item) {
 function renderCatalog(catalog) {
   var $container = createElement('div', { class: 'container' }, [])
   var $row = createElement('div', { class: 'row' }, [])
-
   catalog.items.forEach((item) => {
     var $item = createElement('div', { class: 'col-3' }, [renderCard(item)])
     $row.appendChild($item)
   })
-
   $container.appendChild($row)
   return $container
 }
@@ -176,7 +167,7 @@ function renderCartTotal(cart) {
   var total = cart.items.reduce((acc, item) => {
     return acc + item.price
   }, 0)
-  return createElement('div', { class: 'col-6 offset-3 ' }, [
+  return createElement('div', { class: 'col-6 offset-3' }, [
     createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(total)])
   ])
 }
@@ -191,16 +182,13 @@ function renderCartSummary(cart) {
   var $summary = createElement('div', { class: 'container' }, [
     createElement('h2', { class: 'cart-header text-center' }, ['Cart Summary'])
   ])
-
   app.cart.items.forEach((item) => {
     $summary.appendChild(renderCartItem(item))
   })
-
   $summary.appendChild(renderCartItemCount(cart))
   $summary.appendChild(renderCartTotal(cart))
   var $cartBtn = createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping'])
   $summary.appendChild($cartBtn)
-
   return $summary
 }
 
@@ -219,16 +207,13 @@ function showContainer(view) {
   var $visible = document.querySelector('[data-view=' + view + ']')
   var $hidden = document.querySelectorAll('[data-view]:not([data-view=' + view + '])')
   $visible.classList.remove('hidden')
-
   $hidden.forEach(($node) => {
     $node.classList.add('hidden')
   })
-
 }
 
 function renderApp(app) {
   showContainer(app.view)
-
   if (app.view === 'catalog') {
     $catalogView.innerHTML = ''
     $catalogView.appendChild(renderCatalog(app.catalog))
@@ -241,10 +226,8 @@ function renderApp(app) {
     $cartSummaryView.innerHTML = ''
     $cartSummaryView.appendChild(renderCartSummary(app.cart))
   }
-
   $cart.innerHTML = ''
   $cart.appendChild(renderCart(app.cart))
-
 }
 
 var $catalogView = document.querySelector("[data-view='catalog']")
@@ -257,17 +240,14 @@ renderApp(app)
 $catalogView.addEventListener('click', (event) => {
   var $closestItem = event.target.closest('.card')
   var clickedItemId = parseInt($closestItem.dataset.itemId, 10)
-
   if ($closestItem) {
     app.view = 'details'
     app.details.item = getItem(app.catalog.items, clickedItemId)
     renderApp(app)
   }
-
 })
 
 $detailsView.addEventListener('click', (event) => {
-
   if (event.target.id === 'add-to-cart') {
     app.cart.items.push(app.details.item)
     renderApp(app)
@@ -276,21 +256,16 @@ $detailsView.addEventListener('click', (event) => {
     app.view = 'catalog'
     renderApp(app)
   }
-
 })
 
 $cartSummaryView.addEventListener('click', (event) => {
-
   if (event.target.id === 'cart-continue-shopping') {
     app.view = 'catalog'
     renderApp(app)
   }
-
 })
 
 $cart.addEventListener('click', (event) => {
-
   app.view = 'cart'
   renderApp(app)
-
 })
