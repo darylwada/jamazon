@@ -48,8 +48,16 @@ h1 {
   top: 75px;
   left: 0;
   right: 0;
-  color: rgb(253, 152, 39);
+  color: white;
   text-align: right;
+}
+
+.cart-number {
+  color: rgb(253, 152, 39);
+}
+
+.cart-container:hover {
+  cursor: pointer;
 }
 
 .btn-primary {
@@ -71,4 +79,44 @@ h1 {
 
 .badge {
   font-size: 100%;
+}
+
+.cart-col {
+  padding: 0 25px;
+  min-height: 150px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid lightGray;
+}
+
+.cart-header {
+  margin-bottom: 50px;
+}
+
+.cart-img {
+  position: absolute;
+  margin-left: 0;
+  max-width: 50%;
+  max-height: 95%;
+}
+
+.cart {
+  margin-left: 70%;
+  width: 50%;
+  text-align: left;
+}
+
+.card-title.cart {
+  padding-top: 25px;
+}
+
+.cart-total {
+  font-size: 1.4em;
+}
+
+#cart-continue-shopping {
+  background: linear-gradient(rgb(239, 193, 87), rgb(253, 188, 111));
+  width: 150px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }

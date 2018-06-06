@@ -97,7 +97,6 @@ function createElement(tagName, attributes, children) {
   for (var key in attributes) {
     $HTMLElement.setAttribute(key, attributes[key])
   }
-
   children.forEach(function (child) {
     if (child instanceof Node) {
       $HTMLElement.appendChild(child)
@@ -106,40 +105,30 @@ function createElement(tagName, attributes, children) {
       $HTMLElement.textContent = child
     }
   })
-
   return $HTMLElement
 }
 
 function currencyFormat(price) {
-  var priceStr = price.toString()
-  if (priceStr[priceStr.length - 3] !== '.') {
-    priceStr += '.00'
-  }
-  return '$' + priceStr
+  return '$' + price.toFixed(2)
 }
 
 function renderCard(item) {
-  return createElement('div', { class: 'card', style: 'width: 18rem;', 'data-item-id': item.itemId }, [
-    createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
-    createElement('div', { class: 'card-body' }, [
-      createElement('h5', { class: 'card-title' }, [item.brand]),
-      createElement('p', { class: 'card-text item-name' }, [item.name]),
-      createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+  return createElement('div', { class: 'col-3' }, [
+    createElement('div', { class: 'card', style: 'width: 18rem;', 'data-item-id': item.itemId }, [
+      createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
+      createElement('div', { class: 'card-body' }, [
+        createElement('h5', { class: 'card-title' }, [item.brand]),
+        createElement('p', { class: 'card-text item-name' }, [item.name]),
+        createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+      ])
     ])
   ])
 }
 
 function renderCatalog(catalog) {
-  var $container = createElement('div', { class: 'container' }, [])
-  var $row = createElement('div', { class: 'row' }, [])
-
-  catalog.items.forEach((item) => {
-    var $item = createElement('div', { class: 'col-3' }, [renderCard(item)])
-    $row.appendChild($item)
-  })
-
-  $container.appendChild($row)
-  return $container
+  return createElement('div', { class: 'container' }, [
+    createElement('div', { class: 'row' }, catalog.items.map((item) => renderCard(item)))
+  ])
 }
 
 function renderDetails(item) {
@@ -162,6 +151,40 @@ function renderDetails(item) {
   ])
 }
 
+function renderCartItem(item) {
+  return createElement('div', { class: 'col-6 offset-3 cart-col' }, [
+    createElement('img', { class: 'cart-img', src: item.imageUrl, alt: 'Card image cap' }, []),
+    createElement('h5', { class: 'card-title cart' }, [item.brand]),
+    createElement('p', { class: 'card-text item-name cart' }, [item.name]),
+    createElement('p', { class: 'card-text cart' }, [currencyFormat(item.price)])
+  ])
+}
+
+function renderCartTotal(cart) {
+  var total = cart.items.reduce((acc, item) => {
+    return acc + item.price
+  }, 0)
+  return createElement('div', { class: 'col-6 offset-3' }, [
+    createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(total)])
+  ])
+}
+
+function renderCartItemCount(cart) {
+  return createElement('div', { class: 'col-6 offset-3' }, [
+    createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length])
+  ])
+}
+
+function renderCartSummary(cart) {
+  return createElement('div', { class: 'container' }, [
+    createElement('h2', { class: 'cart-header text-center' }, ['Cart Summary']),
+    createElement('div', {}, cart.items.map((item) => renderCartItem(item))),
+    renderCartItemCount(cart),
+    renderCartTotal(cart),
+    createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping'])
+  ])
+}
+
 function renderCart(cart) {
   return createElement('div', { class: 'nav-item' }, [
     'Cart: ',
@@ -175,14 +198,15 @@ function getItem(items, itemId) {
 
 function showContainer(view) {
   var $visible = document.querySelector('[data-view=' + view + ']')
-  var $hidden = document.querySelector('[data-view]:not([data-view=' + view + '])')
+  var $hidden = document.querySelectorAll('[data-view]:not([data-view=' + view + '])')
   $visible.classList.remove('hidden')
-  $hidden.classList.add('hidden')
+  $hidden.forEach(($node) => {
+    $node.classList.add('hidden')
+  })
 }
 
 function renderApp(app) {
   showContainer(app.view)
-
   if (app.view === 'catalog') {
     $catalogView.innerHTML = ''
     $catalogView.appendChild(renderCatalog(app.catalog))
@@ -191,14 +215,17 @@ function renderApp(app) {
     $detailsView.innerHTML = ''
     $detailsView.appendChild(renderDetails(app.details.item))
   }
-
+  else if (app.view === 'cart') {
+    $cartSummaryView.innerHTML = ''
+    $cartSummaryView.appendChild(renderCartSummary(app.cart))
+  }
   $cart.innerHTML = ''
   $cart.appendChild(renderCart(app.cart))
-
 }
 
 var $catalogView = document.querySelector("[data-view='catalog']")
 var $detailsView = document.querySelector("[data-view='details']")
+var $cartSummaryView = document.querySelector("[data-view='cart']")
 var $cart = document.querySelector('.cart-container')
 
 renderApp(app)
@@ -206,17 +233,14 @@ renderApp(app)
 $catalogView.addEventListener('click', (event) => {
   var $closestItem = event.target.closest('.card')
   var clickedItemId = parseInt($closestItem.dataset.itemId, 10)
-
   if ($closestItem) {
     app.view = 'details'
     app.details.item = getItem(app.catalog.items, clickedItemId)
     renderApp(app)
   }
-
 })
 
 $detailsView.addEventListener('click', (event) => {
-
   if (event.target.id === 'add-to-cart') {
     app.cart.items.push(app.details.item)
     renderApp(app)
@@ -225,5 +249,16 @@ $detailsView.addEventListener('click', (event) => {
     app.view = 'catalog'
     renderApp(app)
   }
+})
 
+$cartSummaryView.addEventListener('click', (event) => {
+  if (event.target.id === 'cart-continue-shopping') {
+    app.view = 'catalog'
+    renderApp(app)
+  }
+})
+
+$cart.addEventListener('click', (event) => {
+  app.view = 'cart'
+  renderApp(app)
 })
