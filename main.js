@@ -181,7 +181,8 @@ function renderCartSummary(cart) {
     createElement('div', {}, cart.items.map((item) => renderCartItem(item))),
     renderCartItemCount(cart),
     renderCartTotal(cart),
-    createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping'])
+    createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping']),
+    createElement('button', { class: 'btn btn-primary', id: 'cart-checkout' }, ['Checkout'])
   ])
 }
 
