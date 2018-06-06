@@ -257,6 +257,10 @@ $cartSummaryView.addEventListener('click', (event) => {
     app.view = 'catalog'
     renderApp(app)
   }
+  else if (event.target.id === 'cart-checkout') {
+    app.view = 'checkout'
+    renderApp(app)
+  }
 })
 
 $cart.addEventListener('click', (event) => {
