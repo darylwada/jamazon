@@ -113,25 +113,22 @@ function currencyFormat(price) {
 }
 
 function renderCard(item) {
-  return createElement('div', { class: 'card', style: 'width: 18rem;', 'data-item-id': item.itemId }, [
-    createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
-    createElement('div', { class: 'card-body' }, [
-      createElement('h5', { class: 'card-title' }, [item.brand]),
-      createElement('p', { class: 'card-text item-name' }, [item.name]),
-      createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+  return createElement('div', { class: 'col-3' }, [
+    createElement('div', { class: 'card', style: 'width: 18rem;', 'data-item-id': item.itemId }, [
+      createElement('img', { class: 'card-img-top', src: item.imageUrl, alt: 'Card image cap' }, []),
+      createElement('div', { class: 'card-body' }, [
+        createElement('h5', { class: 'card-title' }, [item.brand]),
+        createElement('p', { class: 'card-text item-name' }, [item.name]),
+        createElement('p', { class: 'card-text' }, [currencyFormat(item.price)])
+      ])
     ])
   ])
 }
 
 function renderCatalog(catalog) {
-  var $container = createElement('div', { class: 'container' }, [])
-  var $row = createElement('div', { class: 'row' }, [])
-  catalog.items.forEach((item) => {
-    var $item = createElement('div', { class: 'col-3' }, [renderCard(item)])
-    $row.appendChild($item)
-  })
-  $container.appendChild($row)
-  return $container
+  return createElement('div', { class: 'container' }, [
+    createElement('div', { class: 'row' }, catalog.items.map((item) => renderCard(item)))
+  ])
 }
 
 function renderDetails(item) {
@@ -179,17 +176,13 @@ function renderCartItemCount(cart) {
 }
 
 function renderCartSummary(cart) {
-  var $summary = createElement('div', { class: 'container' }, [
-    createElement('h2', { class: 'cart-header text-center' }, ['Cart Summary'])
+  return createElement('div', { class: 'container' }, [
+    createElement('h2', { class: 'cart-header text-center' }, ['Cart Summary']),
+    createElement('div', {}, cart.items.map((item) => renderCartItem(item))),
+    renderCartItemCount(cart),
+    renderCartTotal(cart),
+    createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping'])
   ])
-  app.cart.items.forEach((item) => {
-    $summary.appendChild(renderCartItem(item))
-  })
-  $summary.appendChild(renderCartItemCount(cart))
-  $summary.appendChild(renderCartTotal(cart))
-  var $cartBtn = createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping'])
-  $summary.appendChild($cartBtn)
-  return $summary
 }
 
 function renderCart(cart) {
