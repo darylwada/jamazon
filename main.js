@@ -82,7 +82,8 @@ var app = {
         origin: 'Japan',
         imageUrl: 'https://goo.gl/gJYUxz'
       }
-    ]
+    ],
+    sorted: 0
   },
   details: {
     item: null
