@@ -122,7 +122,7 @@ h1 {
 }
 
 #cart-checkout {
-  background: linear-gradient(rgb(239, 193, 87), rgb(253, 188, 111));
+  background: linear-gradient(rgb(253, 188, 111), rgb(253, 152, 39));
   width: 150px;
   left: 200px;
   right: 0;
@@ -147,11 +147,16 @@ label {
 }
 
 #form-address-input {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+#form-city-input {
   width: 50%;
   margin-right: 5%;
 }
 
-#form-city-input {
+#form-state-input {
   width: 15%;
   margin-right: 5%;
 }
@@ -160,6 +165,20 @@ label {
   width: 25%;
 }
 
-input[type="address"] {
+#form-card-input {
+  width: 50%;
+  margin-right: 5%;
+}
+
+#form-cvv-input {
+  width: 15%;
+  margin-right: 5%;
+}
+
+#form-expire-input {
+  width: 25%;
+}
+
+.form-group > input {
   display: inline-block;
 }

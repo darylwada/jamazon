@@ -194,17 +194,20 @@ function renderCheckout(cart) {
     createElement('form', { class: 'col-6 offset-3' }, [
       createElement('div', { class: 'form-group' }, [
         createElement('label', { for: 'form-name-input' }, ['Name']),
-        createElement('input', { type: 'name', class: 'form-control', id: 'form-name-input', placeholder: 'John Doe' }, [])
+        createElement('input', { type: 'name', class: 'form-control', id: 'form-name-input', placeholder: 'Full Name' }, [])
       ]),
       createElement('div', { class: 'form-group' }, [
         createElement('label', { for: 'form-address-input' }, ['Address']),
         createElement('input', { type: 'address', class: 'form-control', id: 'form-address-input', placeholder: 'Street Number' }, []),
         createElement('input', { type: 'address', class: 'form-control', id: 'form-city-input', placeholder: 'City' }, []),
+        createElement('input', { type: 'address', class: 'form-control', id: 'form-state-input', placeholder: 'State' }, []),
         createElement('input', { type: 'address', class: 'form-control', id: 'form-zip-input', placeholder: 'Zip Code' }, [])
       ]),
       createElement('div', { class: 'form-group' }, [
         createElement('label', { for: 'form-card-input' }, ['Credit Card']),
-        createElement('input', { type: 'card', class: 'form-control', id: 'form-card-input', placeholder: '1234 5678 9012 3456' }, [])
+        createElement('input', { type: 'card', class: 'form-control', id: 'form-card-input', placeholder: 'Card Number' }, []),
+        createElement('input', { type: 'card', class: 'form-control', id: 'form-cvv-input', placeholder: 'CVV' }, []),
+        createElement('input', { type: 'card', class: 'form-control', id: 'form-expire-input', placeholder: 'Exp. (mm/yy)' }, [])
       ]),
       createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length]),
       createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(cart.total)]),
