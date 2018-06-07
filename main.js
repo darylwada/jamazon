@@ -128,7 +128,8 @@ function renderCard(item) {
 
 function renderCatalog(catalog) {
   return createElement('div', { class: 'container' }, [
-    createElement('div', { class: 'row' }, catalog.items.map((item) => renderCard(item)))
+    createElement('div', { class: 'row' }, catalog.items.sort((a, b) => (a.price - b.price) * catalog.sorted)
+      .map((item) => renderCard(item)))
   ])
 }
 
