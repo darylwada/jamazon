@@ -160,28 +160,24 @@ function renderCartItem(item) {
   ])
 }
 
-function renderCartTotal(cart) {
-  var total = cart.items.reduce((acc, item) => {
+function calculateCartTotal(cart) {
+  return cart.items.reduce((acc, item) => {
     return acc + item.price
   }, 0)
-  return createElement('div', { class: 'col-6 offset-3' }, [
-    createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(total)])
-  ])
-}
-
-function renderCartItemCount(cart) {
-  return createElement('div', { class: 'col-6 offset-3' }, [
-    createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length])
-  ])
 }
 
 function renderCartSummary(cart) {
   return createElement('div', { class: 'container' }, [
     createElement('h2', { class: 'cart-header text-center' }, ['Cart Summary']),
     createElement('div', {}, cart.items.map((item) => renderCartItem(item))),
-    renderCartItemCount(cart),
-    renderCartTotal(cart),
-    createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping'])
+    createElement('div', { class: 'col-6 offset-3' }, [
+      createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length])
+    ]),
+    createElement('div', { class: 'col-6 offset-3' }, [
+      createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(calculateCartTotal(cart))])
+    ]),
+    createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping']),
+    createElement('button', { class: 'btn btn-primary', id: 'cart-checkout' }, ['Checkout'])
   ])
 }
 
@@ -189,6 +185,33 @@ function renderCart(cart) {
   return createElement('div', { class: 'nav-item' }, [
     'Cart: ',
     createElement('span', { class: 'cart-number' }, [cart.items.length])
+  ])
+}
+
+function renderCheckout(cart) {
+  return createElement('div', { class: 'container' }, [
+    createElement('form', { class: 'col-6 offset-3' }, [
+      createElement('div', { class: 'form-group' }, [
+        createElement('label', { for: 'form-name-input' }, ['Name']),
+        createElement('input', { type: 'name', class: 'form-control', id: 'form-name-input', placeholder: 'Full Name' }, [])
+      ]),
+      createElement('div', { class: 'form-group' }, [
+        createElement('label', { for: 'form-address-input' }, ['Address']),
+        createElement('input', { type: 'address', class: 'form-control', id: 'form-address-input', placeholder: 'Street Number' }, []),
+        createElement('input', { type: 'address', class: 'form-control', id: 'form-city-input', placeholder: 'City' }, []),
+        createElement('input', { type: 'address', class: 'form-control', id: 'form-state-input', placeholder: 'State' }, []),
+        createElement('input', { type: 'address', class: 'form-control', id: 'form-zip-input', placeholder: 'Zip Code' }, [])
+      ]),
+      createElement('div', { class: 'form-group' }, [
+        createElement('label', { for: 'form-card-input' }, ['Credit Card']),
+        createElement('input', { type: 'card', class: 'form-control', id: 'form-card-input', placeholder: 'Card Number' }, []),
+        createElement('input', { type: 'card', class: 'form-control', id: 'form-cvv-input', placeholder: 'CVV' }, []),
+        createElement('input', { type: 'card', class: 'form-control', id: 'form-expire-input', placeholder: 'Exp. (mm/yy)' }, [])
+      ]),
+      createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length]),
+      createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(calculateCartTotal(cart))]),
+      createElement('button', { class: 'btn btn-primary', id: 'checkout-pay', type: 'submit' }, ['Pay Now'])
+    ])
   ])
 }
 
@@ -219,6 +242,10 @@ function renderApp(app) {
     $cartSummaryView.innerHTML = ''
     $cartSummaryView.appendChild(renderCartSummary(app.cart))
   }
+  else if (app.view === 'checkout') {
+    $checkoutView.innerHTML = ''
+    $checkoutView.appendChild(renderCheckout(app.cart))
+  }
   $cart.innerHTML = ''
   $cart.appendChild(renderCart(app.cart))
 }
@@ -226,6 +253,7 @@ function renderApp(app) {
 var $catalogView = document.querySelector("[data-view='catalog']")
 var $detailsView = document.querySelector("[data-view='details']")
 var $cartSummaryView = document.querySelector("[data-view='cart']")
+var $checkoutView = document.querySelector("[data-view='checkout']")
 var $cart = document.querySelector('.cart-container')
 
 renderApp(app)
@@ -256,9 +284,18 @@ $cartSummaryView.addEventListener('click', (event) => {
     app.view = 'catalog'
     renderApp(app)
   }
+  else if (event.target.id === 'cart-checkout') {
+    app.view = 'checkout'
+    renderApp(app)
+  }
 })
 
 $cart.addEventListener('click', (event) => {
   app.view = 'cart'
   renderApp(app)
+})
+
+$checkoutView.addEventListener('submit', (event) => {
+  event.preventDefault()
+  alert('Success! Order submitted.')
 })
