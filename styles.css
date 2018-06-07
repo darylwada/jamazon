@@ -133,3 +133,33 @@ form {
   padding: 50px;
   border: 1px solid lightGray;
 }
+
+#checkout-pay {
+  background: linear-gradient(rgb(253, 188, 111), rgb(253, 152, 39));
+  width: 150px;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+}
+
+#form-address-input {
+  width: 50%;
+  margin-right: 5%;
+}
+
+#form-city-input {
+  width: 15%;
+  margin-right: 5%;
+}
+
+#form-zip-input {
+  width: 25%;
+}
+
+input[type="address"] {
+  display: inline-block;
+}

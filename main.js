@@ -88,7 +88,8 @@ var app = {
     item: null
   },
   cart: {
-    items: []
+    items: [],
+    total: null
   }
 }
 
@@ -160,27 +161,22 @@ function renderCartItem(item) {
   ])
 }
 
-function renderCartTotal(cart) {
-  var total = cart.items.reduce((acc, item) => {
+function calculateCartTotal(cart) {
+  return cart.items.reduce((acc, item) => {
     return acc + item.price
   }, 0)
-  return createElement('div', { class: 'col-6 offset-3' }, [
-    createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(total)])
-  ])
-}
-
-function renderCartItemCount(cart) {
-  return createElement('div', { class: 'col-6 offset-3' }, [
-    createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length])
-  ])
 }
 
 function renderCartSummary(cart) {
   return createElement('div', { class: 'container' }, [
     createElement('h2', { class: 'cart-header text-center' }, ['Cart Summary']),
     createElement('div', {}, cart.items.map((item) => renderCartItem(item))),
-    renderCartItemCount(cart),
-    renderCartTotal(cart),
+    createElement('div', { class: 'col-6 offset-3' }, [
+      createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length])
+    ]),
+    createElement('div', { class: 'col-6 offset-3' }, [
+      createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(cart.total)])
+    ]),
     createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping']),
     createElement('button', { class: 'btn btn-primary', id: 'cart-checkout' }, ['Checkout'])
   ])
@@ -195,21 +191,24 @@ function renderCart(cart) {
 
 function renderCheckout(cart) {
   return createElement('div', { class: 'container' }, [
-    createElement('div', { class: 'row' }, [
-      createElement('form', { class: 'col-6 offset-3' }, [
-        createElement('div', { class: 'form-group' }, [
-          createElement('label', { for: 'form-name-input' }, ['Name']),
-          createElement('input', { type: 'name', class: 'form-control', id: 'form-name-input', placeholder: 'John Doe' }, [])
-        ]),
-        createElement('div', { class: 'form-group' }, [
-          createElement('label', { for: 'form-address-input' }, ['Address']),
-          createElement('input', { type: 'address', class: 'form-control', id: 'form-address-input', placeholder: 'Street Number' }, [])
-        ]),
-        createElement('div', { class: 'form-group' }, [
-          createElement('label', { for: 'form-card-input' }, ['Credit Card']),
-          createElement('input', { type: 'card', class: 'form-control', id: 'form-card-input', placeholder: '1234' }, [])
-        ])
-      ])
+    createElement('form', { class: 'col-6 offset-3' }, [
+      createElement('div', { class: 'form-group' }, [
+        createElement('label', { for: 'form-name-input' }, ['Name']),
+        createElement('input', { type: 'name', class: 'form-control', id: 'form-name-input', placeholder: 'John Doe' }, [])
+      ]),
+      createElement('div', { class: 'form-group' }, [
+        createElement('label', { for: 'form-address-input' }, ['Address']),
+        createElement('input', { type: 'address', class: 'form-control', id: 'form-address-input', placeholder: 'Street Number' }, []),
+        createElement('input', { type: 'address', class: 'form-control', id: 'form-city-input', placeholder: 'City' }, []),
+        createElement('input', { type: 'address', class: 'form-control', id: 'form-zip-input', placeholder: 'Zip Code' }, [])
+      ]),
+      createElement('div', { class: 'form-group' }, [
+        createElement('label', { for: 'form-card-input' }, ['Credit Card']),
+        createElement('input', { type: 'card', class: 'form-control', id: 'form-card-input', placeholder: '1234 5678 9012 3456' }, [])
+      ]),
+      createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length]),
+      createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(cart.total)]),
+      createElement('button', { class: 'btn btn-primary', id: 'checkout-pay' }, ['Pay Now'])
     ])
   ])
 }
@@ -291,5 +290,6 @@ $cartSummaryView.addEventListener('click', (event) => {
 
 $cart.addEventListener('click', (event) => {
   app.view = 'cart'
+  app.cart.total = calculateCartTotal(app.cart)
   renderApp(app)
 })
