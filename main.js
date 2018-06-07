@@ -293,3 +293,9 @@ $cart.addEventListener('click', (event) => {
   app.cart.total = calculateCartTotal(app.cart)
   renderApp(app)
 })
+
+$checkoutView.addEventListener('click', (event) => {
+  if (event.target.id === 'checkout-pay') {
+    alert('Success! Order submitted.')
+  }
+})
