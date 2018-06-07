@@ -88,8 +88,7 @@ var app = {
     item: null
   },
   cart: {
-    items: [],
-    total: null
+    items: []
   }
 }
 
@@ -175,7 +174,7 @@ function renderCartSummary(cart) {
       createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length])
     ]),
     createElement('div', { class: 'col-6 offset-3' }, [
-      createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(cart.total)])
+      createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(calculateCartTotal(cart))])
     ]),
     createElement('button', { class: 'btn btn-primary', id: 'cart-continue-shopping' }, ['Continue Shopping']),
     createElement('button', { class: 'btn btn-primary', id: 'cart-checkout' }, ['Checkout'])
@@ -210,8 +209,8 @@ function renderCheckout(cart) {
         createElement('input', { type: 'card', class: 'form-control', id: 'form-expire-input', placeholder: 'Exp. (mm/yy)' }, [])
       ]),
       createElement('div', { class: 'cart-item-count text-right cart-total' }, ['Items: ' + cart.items.length]),
-      createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(cart.total)]),
-      createElement('button', { class: 'btn btn-primary', id: 'checkout-pay' }, ['Pay Now'])
+      createElement('div', { class: 'text-right cart-total' }, ['Total: ' + currencyFormat(calculateCartTotal(cart))]),
+      createElement('button', { class: 'btn btn-primary', id: 'checkout-pay', type: 'submit' }, ['Pay Now'])
     ])
   ])
 }
@@ -293,12 +292,10 @@ $cartSummaryView.addEventListener('click', (event) => {
 
 $cart.addEventListener('click', (event) => {
   app.view = 'cart'
-  app.cart.total = calculateCartTotal(app.cart)
   renderApp(app)
 })
 
-$checkoutView.addEventListener('click', (event) => {
-  if (event.target.id === 'checkout-pay') {
-    alert('Success! Order submitted.')
-  }
+$checkoutView.addEventListener('submit', (event) => {
+  event.preventDefault()
+  alert('Success! Order submitted.')
 })
