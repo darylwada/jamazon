@@ -182,3 +182,29 @@ label {
 .form-group > input {
   display: inline-block;
 }
+
+.dropdown {
+  height: 30px;
+  text-align: right;
+}
+
+.dropdown > button {
+  position: absolute;
+  right: 0;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  width: 100px;
+  background-color: rgb(36, 48, 61);
+  color: white;
+  z-index: 5;
+  padding: 0;
+}
+
+#low-to-high {
+  top: 30px;
+}
+
+#high-to-low {
+  top: 60px;
+}
