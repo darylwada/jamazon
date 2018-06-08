@@ -83,7 +83,8 @@ var app = {
         imageUrl: 'https://goo.gl/gJYUxz'
       }
     ],
-    sorted: 0
+    sorted: 0,
+    menu: false
   },
   details: {
     item: null
@@ -126,13 +127,22 @@ function renderCard(item) {
   ])
 }
 
+function renderCatalogDropdown(catalog) {
+  if (catalog.menu) {
+    return [createElement('button', { class: 'btn dropdown-item', id: 'low-to-high' }, ['Low to high']),
+      createElement('button', { class: 'btn dropdown-item', id: 'high-to-low' }, ['High to low'])]
+  }
+  else {
+    return [createElement('button', { class: 'btn dropdown-item hidden', id: 'low-to-high' }, ['Low to high']),
+      createElement('button', { class: 'btn dropdown-item hidden', id: 'high-to-low' }, ['High to low'])]
+  }
+}
+
 function renderCatalog(catalog) {
   return createElement('div', { class: 'container' }, [
     createElement('div', { class: 'dropdown' }, [
-      createElement('button', { class: 'btn dropdown-toggle', type: 'button', id: 'sort-dropdown' }, ['Sort Menu']),
-      createElement('button', { class: 'btn dropdown-item hidden', id: 'low-to-high' }, ['Low to high']),
-      createElement('button', { class: 'btn dropdown-item hidden', id: 'high-to-low' }, ['High to low'])
-    ]),
+      createElement('button', { class: 'btn dropdown-toggle', type: 'button', id: 'sort-dropdown' }, ['Sort Menu'])
+    ].concat(renderCatalogDropdown(catalog))),
     createElement('div', { class: 'row' }, catalog.items.sort((a, b) => (a.price - b.price) * catalog.sorted)
       .map((item) => renderCard(item)))
   ])
@@ -270,21 +280,22 @@ $catalogView.addEventListener('click', (event) => {
   if ($closestItem) {
     var clickedItemId = parseInt($closestItem.dataset.itemId, 10)
     app.view = 'details'
+    app.catalog.menu = false
     app.details.item = getItem(app.catalog.items, clickedItemId)
     renderApp(app)
   }
-  else if (event.target.id === 'sort-dropdown') {
-    var $dropdown = document.querySelectorAll('.dropdown-item')
-    $dropdown.forEach(($button) => {
-      $button.classList.toggle('hidden')
-    })
+  if (event.target.id === 'sort-dropdown') {
+    app.catalog.menu = !app.catalog.menu
+    renderApp(app)
   }
   if (event.target.id === 'low-to-high') {
     app.catalog.sorted = 1
+    app.catalog.menu = false
     renderApp(app)
   }
   if (event.target.id === 'high-to-low') {
     app.catalog.sorted = -1
+    app.catalog.menu = false
     renderApp(app)
   }
 })
